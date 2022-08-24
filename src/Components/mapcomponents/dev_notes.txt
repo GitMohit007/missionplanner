@@ -1,0 +1,20 @@
+For Mission
+
+    For Parser - json object with mission like so
+    {
+        "mission" :
+        [
+            { "type":"loiter_unlim" , "lat":0 , "lon:0" , "radius":0 , "alt":0 }
+            ,{ "type":"loiter_turns" , "lat":0 , "lon:0" , "radius":0 , "alt":0 , count:0 }
+            ,{ "type":"loiter_time" , "lat":0 , "lon:0" , "radius":0 , "alt":0 , time:0 }
+            ,{ "type":"loiter_to_alt" , "lat":0 , "lon:0" , "radius":0 , "alt":0 }
+            ,{ "type":"waypoint" , "lat":0 , "lon:0" , "radius":0 , "alt":0 }
+            ,{ "type":"return_to_launch" , "lat":0 , "lon:0" , "radius":0 , "alt":0 }
+        ],  
+        codes: ""
+    }   
+
+    Types of waypoints : "waypoint", "loiter_turns", "loiter_time", "loiter_to_alt","loiter_unlim", "return_to_launch", "landing"
+
+    #   Simple Push mission test complete
+    # Add Takeoff point, Landing Point , Home marker, ROI points, Polygon

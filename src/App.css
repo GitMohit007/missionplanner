@@ -1,38 +1,161 @@
-.App {
-  text-align: center;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono&display=swap');
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@layer components
+{
+  
+  .map-sidebar-icon{
+      @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto
+      shadow-lg bg-gray-800 text-green-500
+      hover:bg-green-600 hover:text-white 
+      rounded-3xl hover:rounded-xl 
+      transition-all duration-200 ease-linear;      
   }
-  to {
-    transform: rotate(360deg);
+
+  .map-sidebar-tooltip
+  {
+    @apply absolute flex flex-col w-auto m-2 min-w-max bottom-14
+    rounded-md shadow-md overflow-clip
+    text-white bg-gray-900
+    text-xs font-bold
+    transition-all duration-100 scale-0  origin-bottom;
   }
+
+  .map-sidebar-icon-active
+  {
+    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto
+      shadow-lg bg-gray-800 text-green-500
+      hover:bg-green-600 hover:text-white 
+      border border-blue-400
+      rounded-xl
+      transition-all duration-200 ease-linear;   
+  }
+
+  .map-sidebar
+  {
+    @apply absolute z-30 bottom-4 left-[50%] -translate-x-1/2 h-auto w-auto items-center  
+    gap-2 pl-2 pr-2 flex flex-none rounded-lg bg-gray-900 text-white shadow-lg;
+  }
+
+  .card-list
+  {
+    @apply absolute flex flex-col overflow-hidden space-y-2 z-40 right-0 w-auto max-h-full h-fit bg-gray-900/0 overflow-x-hidden
+    text-white items-end pl-2 pb-[0.7rem] overflow-y-auto translate-x-[0rem] hover:backdrop-blur-sm ;
+  }
+
+
+  .card
+  {
+    @apply static flex flex-nowrap flex-none flex-row no-scrollbar h-[3.8rem] w-36 max-h-max rounded-md  overflow-clip 
+    pr-2    bg-[#1E272E] translate-x-[1rem]
+    shadow-[0.1rem_0_0.5rem_0.1rem_rgba(0,0,0)]
+    hover:translate-y-[-1rem] hover:translate-x-[0rem]
+    hover:h-56 hover:z-50 hover:w-96
+    transition-all duration-100 ease-linear;
+  }
+
+  .card-color-tag
+  {
+    @apply static h-full w-2 flex flex-none rounded-l-md
+  }
+
+  .card-color-tag-waypoint
+  {
+    @apply static bg-[#1BBC9C] h-full w-2 flex flex-none rounded-l-md
+  }
+
+  .card-color-tag-roi
+  {
+    @apply static bg-[#563F6A] h-full w-2 flex flex-none rounded-l-md
+  }
+
+  .card-color-tag-geofence
+  {
+    @apply static bg-[#1A8FDD] h-full w-2 flex flex-none rounded-l-md
+  }
+
+  .card:first-child
+  {
+    @apply mt-[2rem] 
+  }
+
+  .card-header
+  {
+    @apply relative flex flex-col bg-[#1E272E] p-[0.5rem] w-full h-full pb-2 right-0 overflow-clip
+    hover:overflow-auto
+  }
+
+  .card-title
+  {
+    @apply  relative flex flex-none min-w-max pr-2 basis-[68%]
+  }
+
+  .card-section
+  {
+    @apply relative flex flex-none space-x-1 pr-1 w-full items-start
+  }
+
+  .cards-list
+  {
+    @apply overflow-auto w-full h-fit
+  }
+
+  .card-section-props
+  {
+    @apply relative flex flex-none space-x-1 space-y-1 pr-1 w-full items-center
+  }
+
+  .card-label
+  {
+    @apply relative flex flex-row flex-nowrap w-fit h-fit
+    border-[1px] border-slate-200 space-x-2 p-[0.15rem] pr-1 rounded-sm text-xs
+  }
+  
+  .card-label-input
+  {
+    @apply text-[#A0A4A6] bg-slate-800/0 text-xs w-6 text-left border-[1px] border-slate-400/20
+  }
+  
+  .separator
+  {
+    @apply relative bg-slate-700 rounded-sm h-[2px] w-40 m-1 translate-x-[-0.1rem] shadow-sm left-0
+  }
+
+  .separator-vertical
+  {
+    @apply relative bg-slate-400 rounded-sm h-[0.75rem] w-[1.5px] m-1 translate-x-[-0.1rem] shadow-sm
+  }
+
+
+  .card-button
+  {
+    @apply relative bg-[#1E272E] p-1 border-[1px] border-blue-500 font-mono text-xs
+    hover:bg-[#2c3842] active:bg-violet-600
+  }
+
+
+  .marker-icon
+  {
+    @apply flex relative rounded-full w-8 h-8 justify-center items-center text-white text-sm font-bold
+  }
+
+  .polyline-stroke
+  {
+    @apply p-2
+  }
+
 }

@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono&display=swap');
+
+@layer components
+{
+
+    .pilotlistcontainer
+    {
+        @apply relative flex flex-col gap-[2px] w-[100%] h-[60%] bg-[#1E272E] drop-shadow rounded-md overflow-clip;
+    }
+
+    .pilotlistTitle
+    {
+        @apply relative flex flex-none  w-full h-fit p-1 pl-2 bg-[#2B343B] text-[#ffffff] ;
+    }
+
+    .pilotlist
+    {
+        @apply relative flex flex-row h-full flex-nowrap overflow-y-auto gap-[2px] bg-[#1E272E];
+    }
+
+    .col1
+    {
+        @apply relative flex flex-col flex-nowrap gap-[4px] overflow-y-auto w-[35%] h-full bg-[#2B343B] p-1 pl-0;
+    }
+
+    .col2
+    {
+        @apply relative flex flex-row flex-nowrap overflow-y-auto w-full h-full bg-[#2B343B] p-2;
+    }
+
+    .pilotbadge-inactive
+    {
+       @apply relative w-full h-fit bg-[#384047] p-1 rounded-r-xl 
+       hover:rounded-r-md hover:bg-[#56626d]
+       transition-all duration-200 ease-linear;
+    }
+    .pilotbadge-active
+    {
+       @apply relative w-full h-fit bg-[#56626d] p-1 rounded-r-md ;
+    }
+
+}

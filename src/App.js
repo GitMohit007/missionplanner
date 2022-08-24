@@ -1,25 +1,26 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import { MapArea } from './Components/mapcomponents/maparea_m2';
 
-function App() {
+function App() 
+{  
+
+  let queryParams = new URLSearchParams(window.location.search);
+  const id = queryParams.get('id');
+  const name = queryParams.get('name');
+  const type = queryParams.get('type');
+  // console.log(id, name, type); 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className=' relative flex flex-col w-[100vw] h-[100vh] bg-[#1e1e1e]'>
+        <div className=' relative flex flex-row w-[100vw] h-full bg-[#1e1e1e] overflow-auto'>
+          <div className=' relative flex overflow-clip w-full h-full bg-black'>            
+            <MapArea/>
+          </div>
+        </div>
+      </div>
   );
+
 }
 
 export default App;

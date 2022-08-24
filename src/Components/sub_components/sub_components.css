@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono&display=swap');
+
+@layer components
+{
+
+    .dropdown
+    {
+        @apply relative flex flex-col w-fit ; 
+    }
+
+    .dropdown-header
+    {
+        @apply relative flex flex-none space-x-1 pr-1 min-w-fit w-40 items-center ;
+    }
+
+    .dropdown-panel
+    {
+        @apply relative flex flex-col flex-none space-x-1 pr-1 min-w-fit w-full
+        items-center border-slate-200 overflow-hidden
+        transition-all duration-100 ease-linear;
+    }
+
+    .dropdown-label
+    {
+        @apply relative flex flex-row flex-nowrap w-40 h-fit border-[1px]
+        border-slate-200 space-x-2 p-[0.15rem] pr-1 rounded-sm text-xs ;
+    }
+
+    .separator
+    {
+        @apply relative rounded-sm h-[2px] w-40 m-1 translate-x-[-0.1rem] shadow-sm left-0;
+    }
+
+    .separator-vertical
+    {
+        @apply relative rounded-sm h-[0.75rem] w-[1.5px] m-1 translate-x-[-0.1rem] shadow-sm;
+    }
+
+    .dropdown-element
+    {
+        @apply p-[0.25px] basis-3/4 w-full h-fit text-center align-middle overflow-hidden;
+    }
+}
