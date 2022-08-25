@@ -1,7 +1,6 @@
-import React, {useCallback,} from 'react';
-import { BsGearFill, BsCircle, BsPin, BsArrowRepeat,BsSuitDiamondFill, BsHeptagon } from 'react-icons/bs';
+import React from 'react';
+import { BsGearFill, BsPin, BsArrowRepeat } from 'react-icons/bs';
 import '../../App.css'
-import { useState } from 'react';
 import { FaHands } from 'react-icons/fa';
 
 export const ToolBar = (props) => {

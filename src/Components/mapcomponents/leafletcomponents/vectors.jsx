@@ -1,11 +1,11 @@
 import {React} from 'react';
 import {renderToString} from 'react-dom/server';
-// import { Polyline,Marker} from 'react-leaflet';
 import { Popup,Polyline,Polygon,Marker,Circle,Tooltip } from 'react-leaflet';
 import { useState,useMemo,useRef} from 'react';
 import GeometryUtil from 'leaflet-geometryutil';
 import L from 'leaflet';
 import 'leaflet.path.drag/src/Path.Drag';
+import './mapleaflet.css'
 
 export const AddPolyline = ({vector_,UpdateVector}) => 
 {
@@ -15,7 +15,7 @@ export const AddPolyline = ({vector_,UpdateVector}) =>
     const vert_id = index
     const mref = useRef(null);
 
-    let markerStyle = <div className={index===0? "marker-icon bg-[#000000cd] border-4 border-[#0f6f3299]":index===vector_.coordinates.length-1?"marker-icon bg-[#000000cd] border-4 border-[#a9630099] ":"marker-icon bg-[#000000cd] border-4 border-[#0533a699]"}>
+    let markerStyle = <div className={index===0? "takeoff_marker":index===vector_.coordinates.length-1?"landing_marker":" waypoint_marker_inactive"}>
         {index}
     </div>
 
@@ -63,11 +63,11 @@ export const AddPolyline = ({vector_,UpdateVector}) =>
     )
   };
 
-  const AddnewPoint = ({})=> 
+  const AddnewPoint = ()=> 
   {
     const mref = useRef(null);
 
-    let markerStyle = <div className="marker-icon bg-[#000000cd] border-4 border-[#FFFFFF]">
+    let markerStyle = <div className="new_marker">
         +
     </div>
 
@@ -82,30 +82,33 @@ export const AddPolyline = ({vector_,UpdateVector}) =>
     ({
       click(e)
       {
-        let coords = []        
-        vector_.coordinates.forEach((p,i)=>
+        let coords = []    
+        let vec = structuredClone(vector_);    
+        vec.coordinates.map((p,i)=>
         {
           if(i<pointlist.length-1)
-          {
-            p.id = coords.length;
-            coords.push(p);
-            if(GeometryUtil.belongsSegment(e.latlng,L.latLng(...pointlist[i]),L.latLng(...pointlist[i+1])))
+          { 
+            let p_ = structuredClone(p);
+            p_.id = coords.length;
+            p_.attrs.edit=false;
+            coords.push(p_);
+            if(GeometryUtil.belongsSegment(e.latlng,L.latLng(...[p.coordinates.lat,p.coordinates.lng]),L.latLng(...[vec.coordinates[p.id+1].coordinates.lat,vec.coordinates[p.id+1].coordinates.lng])))
             {
-              let wp_ = {...p}
+              let wp_ = structuredClone(p);
               wp_.id = coords.length;
+              wp_.attrs.edit=false;
               wp_.coordinates={...e.latlng};
-              console.log("new point",wp_);
               coords.push(wp_);
             }
           }
           else
           {
-            p.id = coords.length;
-            coords.push(p);
+            let wp_ = structuredClone(p);
+            wp_.id = coords.length;
+            wp_.attrs.edit=false;
+            coords.push(wp_);
           }
-          console.log([...coords]);
         })
-        console.log("Add marker Clicked !!!",coords);
         vector_.coordinates = coords;
         setshowMarkerPrompt(null);
         UpdateVector("PL",vector_);
@@ -113,6 +116,10 @@ export const AddPolyline = ({vector_,UpdateVector}) =>
       mouseover(e)
       {
         setshowMarkerPrompt(e.latlng);
+      },
+      mouseout(e)
+      {
+        setshowMarkerPrompt(null);
       },
     }), [])
 
@@ -127,11 +134,21 @@ export const AddPolyline = ({vector_,UpdateVector}) =>
     {
       vector_.coordinates.forEach((p,i)=>
         {
-          if(i<pointlist.length-1)
+          if(vector_.coordinates[i].attrs.edit)
           {
-            if(GeometryUtil.belongsSegment(e.latlng,L.latLng(...pointlist[i]),L.latLng(...pointlist[i+1])))
+            if((i<pointlist.length-1))
             {
-              setshowMarkerPrompt({lat:(pointlist[i][0]+pointlist[i+1][0])/2,lng:(pointlist[i][1]+pointlist[i+1][1])/2});
+              if(GeometryUtil.belongsSegment(e.latlng,L.latLng(...pointlist[i]),L.latLng(...pointlist[i+1])))
+              {
+                setshowMarkerPrompt({lat:(pointlist[i][0]+pointlist[i+1][0])/2,lng:(pointlist[i][1]+pointlist[i+1][1])/2});
+              }
+            }
+            else
+            {
+              if(GeometryUtil.belongsSegment(e.latlng,L.latLng(...pointlist[i-1]),L.latLng(...pointlist[i])))
+              {
+                setshowMarkerPrompt({lat:(pointlist[i-1][0]+pointlist[i][0])/2,lng:(pointlist[i-1][1]+pointlist[i][1])/2});
+              }
             }
           }
         })
@@ -152,7 +169,6 @@ export const AddPolyline = ({vector_,UpdateVector}) =>
     <>
       <Polyline pathOptions={drawOptions} eventHandlers={eventHandlers} draggable={false} interactive={true} positions={pointlist} ref={refs.Pref} >
         {PointCompls}
-        
       </Polyline>
       {showMarkerPrompt!==null?<AddnewPoint/>:null}
     </>

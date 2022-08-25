@@ -34,13 +34,17 @@ export const MissionDiscCard = (props) =>
     {
         if(props.vector.attrs.edit)
         {
-            vector.attrs.edit = false
-            props.setAttrs(vector)
+            vector.attrs.edit = false;
+            // props.setAttrs(vector)
+            props.setEditAttr(vector);
         }
         else
         {
-            vector.attrs.edit = true
-            props.setAttrs(vector)
+            
+            vector.attrs.edit = true;
+            // props.setAttrs(vector)
+            // console.log('change edit : ',vector);
+            props.setEditAttr(vector);
         }
     }
 
@@ -260,16 +264,8 @@ export const TakeOffCard = (props) =>
 
     const toggleEdit = ()=>
     {
-        if(props.vector.attrs.edit)
-        {
-            vector.attrs.edit = false
-            props.setAttrs(vector)
-        }
-        else
-        {
-            vector.attrs.edit = true
-            props.setAttrs(vector)
-        }
+        vector.attrs.edit = !props.vector.attrs.edit
+        props.setEditAttr(vector);
     }
 
 
@@ -342,7 +338,7 @@ export const WaypointCard = (props) =>
         if(t==='Type')
         {
             vector.attrs.type = attr
-            props.setAttrs(vector)
+            // props.setAttrs(vector)
         }
         else if(t==='TypeSA')
         {
@@ -381,16 +377,8 @@ export const WaypointCard = (props) =>
 
     const toggleEdit = ()=>
     {
-        if(props.vector.attrs.edit)
-        {
-            vector.attrs.edit = false
-            props.setAttrs(vector)
-        }
-        else
-        {
-            vector.attrs.edit = true
-            props.setAttrs(vector)
-        }
+        vector.attrs.edit = !vector.attrs.edit
+        props.setEditAttr(vector);
     }
 
 
@@ -402,7 +390,6 @@ export const WaypointCard = (props) =>
                     <div className='card-title'> 
                         <p className=' text-md text-[#A0A4A6] self-center mr-1'> {props.sno}.</p>
                         <p className=' text-[#A0A4A6] block bg-slate-800/0 pr-10'> {"Waypoint"}.</p>
-                        {/* <input className='text-[#A0A4A6] block bg-slate-800/0' defaultValue='Waypoint' type="text" readOnly={!props.vector.attrs.edit}/> */}
                     </div> 
                     <button className={props.vector.attrs.edit?'card-button self-end text-[#A0A4A6]':'card-button self-end text-[#A0A4A6] border-slate-600 '} onClick={()=>{toggleEdit()}}> {!props.vector.attrs.edit?'Edit':'Save'} </button>
                     <button className=' card-button self-end text-[#A0A4A6]' onClick={()=>{props.delAttrs(props.vector)}}> Delete </button>
@@ -517,16 +504,8 @@ export const LandingCard = (props) =>
 
     const toggleEdit = ()=>
     {
-        if(props.vector.attrs.edit)
-        {
-            vector.attrs.edit = false
-            props.setAttrs(vector)
-        }
-        else
-        {
-            vector.attrs.edit = true
-            props.setAttrs(vector)
-        }
+        vector.attrs.edit = !vector.attrs.edit
+        props.setEditAttr(vector);
     }
 
 
@@ -546,9 +525,9 @@ export const LandingCard = (props) =>
                 <div className=' separator w-0 '/>
                 <div> <p className=' text-sm text-[#A0A4A6]'>Coordinates</p> </div>
                 <div className=' separator w-40 '/>
-                <div> <p className=' text-sm text-[#828488]'>{props.vector.coordinates.lat} N {props.vector.coordinates.lng} E 
-                    {/* <input className='card-label-input ml-2 pr-2' defaultValue={props.vector.coordinates.alt} type="text" readOnly={!props.vector.attrs.edit} onChange={(e)=>{updateattrs('alt',Number(e.target.value))}}/> m  */}
-                    </p> </div>
+                <div> 
+                    <p className=' text-sm text-[#828488]'>{props.vector.coordinates.lat} N {props.vector.coordinates.lng} E </p> 
+                </div>
                 <div className=' separator w-40'/>
                 <div className=' separator w-0 '/>
                 <div className=' card-section'>

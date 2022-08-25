@@ -1,13 +1,13 @@
 import React, {useCallback } from 'react';
-import 'leaflet-editable/src/Leaflet.Editable'
-import 'leaflet/dist/leaflet.css';
 import './mapleaflet.css'
-import { AddMarker, AddCircle, AddPolygon, AddPolyline } from './vectors/vectors.jsx';
+import 'leaflet/dist/leaflet.css';
+import { AddMarker, AddCircle, AddPolygon, AddPolyline } from './vectors.jsx';
 import { MapContainer, TileLayer,useMapEvents,} from 'react-leaflet';
 
 
 export const MapAreaLeaflet = ({center,setMap, zoom, vectorLayers, ClickHandler, UpdateVector, modeSelector}) => 
 {
+  
   const ClickEvent = () =>
   {
     const map_ = useMapEvents({
@@ -22,9 +22,7 @@ export const MapAreaLeaflet = ({center,setMap, zoom, vectorLayers, ClickHandler,
     })
     return <></>;
   } 
-
   
-  // {type:'Feature',properties:{id:null,text:'',edit:true,type:'Point'},geometry:{coordinates:{lat:null,lng:null,alt:null}}}
   const MarkerFactory = useCallback(
     () => 
     {
@@ -81,7 +79,7 @@ export const MapAreaLeaflet = ({center,setMap, zoom, vectorLayers, ClickHandler,
 
   return(
     <div className='relative flex z-30 w-full h-full'>
-        <MapContainer className=' relative' center={center} zoom={zoom} minZoom={2}  scrollWheelZoom={true} doubleClickZoom={false} whenCreated={setMap}>
+        <MapContainer className=' relative' center={center} zoom={zoom} minZoom={2}  scrollWheelZoom={true} doubleClickZoom={false} >
           <TileLayer  url="http://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}" attribution='&copy; <a href="http://mt1.google.com">GoogleMap</a> contributors'/>
           <ClickEvent/>
           <MarkerFactory/>

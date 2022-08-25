@@ -147,12 +147,6 @@
     hover:bg-[#2c3842] active:bg-violet-600
   }
 
-
-  .marker-icon
-  {
-    @apply flex relative rounded-full w-8 h-8 justify-center items-center text-white text-sm font-bold
-  }
-
   .polyline-stroke
   {
     @apply p-2

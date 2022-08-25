@@ -1,5 +1,5 @@
 import React, { useState,useRef, useCallback, } from 'react';
-import { MapAreaLeaflet } from './leafletcomponents/map_leaflet_m2';
+import { MapAreaLeaflet } from './leafletcomponents/map_leaflet.jsx';
 import { ToolBar } from './toolbar_m2';
 import * as turf from '@turf/turf';
 import { VectorCards } from './vectorcards';
@@ -91,7 +91,6 @@ export const MapArea = () =>
                 let v = AddtoPolyline(vld.polylines[0],latlng)
                 vld.polylines = {...vld.polylines,[v.id]:v}
             }
-            console.log(vld);
         }
 
         if(mode!=='None')
@@ -200,10 +199,12 @@ export const MapArea = () =>
         p.id = polyline.coordinates.length;
         if(p.id>0)
         {
-            console.log(polyline)
+            console.log(polyline.coordinates[p.id-1])
             p.coordinates.alt=polyline.coordinates[0].coordinates.alt
+            polyline.coordinates[p.id-1].attrs.edit = false;
         }
         polyline.coordinates = [...polyline.coordinates,p]
+        
         return polyline
     }
 
@@ -212,7 +213,7 @@ export const MapArea = () =>
         let vld = vectorLayers;
         if(type === 'PL')
         {
-            vld.polylines[vector.id] = vector;
+            vld.polylines[vector.id] = vector;            
         }
         if(type === 'PG')
         {
@@ -325,6 +326,37 @@ export const MapArea = () =>
         setvectorLayers({...vld});
     }
 
+    const setEditAttr = (vector) =>
+    {
+        let vld = vectorLayers
+        let v = Object.assign({}, vector); 
+        console.log('v',v)
+        if(vector.type === 'lineStringPoint')
+        {   
+            vld.polylines[vector.vlid].coordinates[v.id] = {...v}       
+            vld.polylines[vector.vlid].coordinates.forEach((p,i)=>
+            {
+                if(p.id === vector.id)
+                {
+                    vld.polylines[vector.vlid].coordinates[p.id] = {...vector}
+                }
+                else
+                {
+                    p.attrs.edit = false
+                    vld.polylines[vector.vlid].coordinates[p.id] = {...p}
+                }
+            })
+            console.log(' vld pl ',vld.polylines[vector.vlid].coordinates);
+            
+            // console.log('v',vector)
+        }
+        if(vector.type === 'polygon')
+        {
+            console.warn("not implemented setAttrs for polygon")
+        }
+        setvectorLayers({...vld});
+    }
+
     const delAttrs = (vector) => 
     {
         let vld = vectorLayers
@@ -429,8 +461,8 @@ export const MapArea = () =>
     return (
     <>
         <div className='relative flex w-full h-full '>
-            <MapAreaLeaflet setMap = {setMap} center = {mapSpecifics.center} zoom={mapSpecifics.zoom} vectorLayers = {vectorLayers} ClickHandler = {ClickHandler.bind(this)} UpdateVector = {UpdateVector.bind(this)}/>
-            <VectorCards vectorLayers = {vectorLayers} setAttrs = {setAttrs} delAttrs={delAttrs} /> 
+            <MapAreaLeaflet setMap = {setMap} center = {mapSpecifics.center} zoom={mapSpecifics.zoom} vectorLayers = {vectorLayers} ClickHandler = {ClickHandler} UpdateVector = {UpdateVector}/>
+            <VectorCards vectorLayers = {vectorLayers} setAttrs = {setAttrs} delAttrs={delAttrs} setEditAttr={setEditAttr}/> 
             <ToolBar TBclickHandler={TBclickHandler} mode = {mode} toggleBlockingPopup={toggleBlockingPopup} settingsOptions={settingsOptions}/>
         </div>
         <BlockingUploadingMap />
