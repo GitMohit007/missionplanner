@@ -7,7 +7,7 @@ export const VectorCards = (props) =>
   const waypointeditor = () => {  }
   
   return (
-    <div className=' card-list'>
+    <div className=' card-list '>
       <MissionDiscCard waypointeditor={waypointeditor} title={"Mission Shalton Manuver"}
             vector={vectorlayers.properties}  setAttrs={props.setAttrs} editState={props.editState} delAttrs={props.delAttrs} />
       {

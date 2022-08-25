@@ -1,4 +1,4 @@
-import React, { useState,useRef, useCallback, } from 'react';
+import React, { useState,useRef, useCallback, useEffect } from 'react';
 import { MapAreaLeaflet } from './leafletcomponents/map_leaflet.jsx';
 import { ToolBar } from './toolbar_m2';
 import * as turf from '@turf/turf';
@@ -6,10 +6,10 @@ import { VectorCards } from './vectorcards';
 import GeometryUtil from 'leaflet-geometryutil';
 import loading_img from '../Resources/animation_500_l6z7q29e.gif'
 
-export const MapArea = () => 
+export const MapArea = ({mission_id}) => 
 {
 
-    let urlpost = 'http://192.168.1.30:8000/drone_api/push_mission?code=4ffaeff4-f001-48e1-a1bd-85c541f8b67b';
+    let urlpost = 'http://192.168.1.30:8000/drone_api/push_mission?code='+mission_id;
 
     let initVectorLayers = localStorage.getItem("vectorlayer")===null?{properties:{edit:false,type:"photogrammetry",time:0,distance:0,text:""}, markers:{},polygons:{},polylines:{},objects:{},circles:{}}:JSON.parse(localStorage.getItem("vectorlayers"));
     let initVectorref = localStorage.getItem("vectorref")===null?{marker:-1,polygon:-1,polyline:-1,objects:-1,circle:-1}:JSON.parse(localStorage.getItem("vectorref"));
@@ -22,6 +22,11 @@ export const MapArea = () =>
     const [mode,setmode] = useState('None');
     const modeList = ['None','NPL0','PL1','NC0','NPG0','PG1','NM0','FM','ST']
     const mapSpecifics = {center:[12.822126830224235, 80.02103984355928],zoom:13}
+    
+    useEffect(() => 
+    {
+        console.log("vl : ",vectorLayers);
+    }, [vectorLayers])
     
     
     const TBclickHandler = (sno_)=>
@@ -110,8 +115,6 @@ export const MapArea = () =>
         mtransect = turf.lineString([turf.getCoord(intersect.features[0]),turf.getCoord(intersect.features[1])]);
         let tran_n = 10;
         let tran_dist = turf.length(mtransect,{units:'meters'})/tran_n;
-        let trans = {};
-        let id=0;
         let transect_ls = []
         let scaler = 1.05        
 

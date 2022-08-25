@@ -61,10 +61,18 @@
   .card
   {
     @apply static flex flex-nowrap flex-none flex-row no-scrollbar h-[3.8rem] w-36 max-h-max rounded-md  overflow-clip 
-    pr-2    bg-[#1E272E] translate-x-[1rem]
+    pr-2 bg-[#1E272E] translate-x-[1rem]
     shadow-[0.1rem_0_0.5rem_0.1rem_rgba(0,0,0)]
     hover:translate-y-[-1rem] hover:translate-x-[0rem]
     hover:h-56 hover:z-50 hover:w-96
+    transition-all duration-100 ease-linear;
+  }
+
+  .card-active
+  {
+    @apply static flex flex-nowrap flex-none flex-row no-scrollbar translate-y-[-1rem] translate-x-[0rem] h-fit w-fit max-h-max rounded-md  overflow-clip 
+    pr-2 bg-[#1E272E]
+    shadow-[0.1rem_0_0.5rem_0.1rem_rgba(0,0,0)]
     transition-all duration-100 ease-linear;
   }
 

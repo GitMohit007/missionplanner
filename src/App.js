@@ -1,14 +1,15 @@
 import React from 'react';
+import { useLocation } from "react-router-dom";
 import './App.css';
 import { MapArea } from './Components/mapcomponents/maparea_m2';
 
 function App() 
 {  
 
-  let queryParams = new URLSearchParams(window.location.search);
-  const id = queryParams.get('id');
-  const name = queryParams.get('name');
-  const type = queryParams.get('type');
+  let search = useLocation().search;
+  let id=new URLSearchParams(search).get("mission_id");
+  console.log('url param id : ',id);
+
   // console.log(id, name, type); 
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../App.css'
 import { DropDownT2 } from '../sub_components/dropdown'
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 
 
 export const MissionDiscCard = (props) =>
@@ -238,7 +238,6 @@ export const GeofenceCardCircle = (props) =>
 
 export const TakeOffCard = (props) => 
 {
-    // let typesWaypoints  = ['Fly-by','Flyover','Hover','Hold']
     let vector = props.vector
 
     const updateattrs = (t,attr)=>
@@ -270,7 +269,7 @@ export const TakeOffCard = (props) =>
 
 
     return (
-        <div className='card group'>
+        <div className={props.vector.attrs.edit?'card-active group':'card group'}>
             <div className=' card-color-tag bg-[#1BBC9C] group-hover:w-0'/>
             <div className='card-header'>
                 <div className='card-section'>
@@ -338,7 +337,7 @@ export const WaypointCard = (props) =>
         if(t==='Type')
         {
             vector.attrs.type = attr
-            // props.setAttrs(vector)
+            props.setAttrs(vector)
         }
         else if(t==='TypeSA')
         {
@@ -383,7 +382,7 @@ export const WaypointCard = (props) =>
 
 
     return (
-        <div className='card group'>
+        <div className={props.vector.attrs.edit?'card-active group':'card group'}>
             <div className=' card-color-tag bg-[#3e8ed0] group-hover:w-0'/>
             <div className='card-header'>
                 <div className='card-section'>
@@ -510,7 +509,7 @@ export const LandingCard = (props) =>
 
 
     return (
-        <div className='card group'>
+        <div className={props.vector.attrs.edit?'card-active group':'card group'}>
             <div className=' card-color-tag bg-[#a96300] group-hover:w-0'/>
             <div className='card-header'>
                 <div className='card-section'>
